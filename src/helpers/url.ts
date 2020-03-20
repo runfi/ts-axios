@@ -1,14 +1,14 @@
-import { isDate, isObject } from './util'
+import { isDate, isPlainObject } from './util'
 
 function encode(val: string): string {
   return encodeURIComponent(val)
-    .replace(/%40%/g, '@')
-    .replace(/%3A%/gi, ':')
-    .replace(/%24%/g, '$')
-    .replace(/%2C%/gi, ',')
-    .replace(/%20%/g, '+')
-    .replace(/%5B%/gi, '[')
-    .replace(/%5D%/gi, ']')
+    .replace(/%40/g, '@')
+    .replace(/%3A/gi, ':')
+    .replace(/%24/g, '$')
+    .replace(/%2C/gi, ',')
+    .replace(/%20/g, '+')
+    .replace(/%5B/gi, '[')
+    .replace(/%5D/gi, ']')
 }
 
 export function buildURL(url: string, params?: any): string {
@@ -23,7 +23,7 @@ export function buildURL(url: string, params?: any): string {
     if (val === null || typeof val === 'undefined') {
       return
     }
-    let values = []
+    let values: string[]
     if (Array.isArray(val)) {
       values = val
       key += '[]'
@@ -33,7 +33,7 @@ export function buildURL(url: string, params?: any): string {
     values.forEach(val => {
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)
@@ -41,10 +41,11 @@ export function buildURL(url: string, params?: any): string {
   })
 
   let serializedParams = parts.join('&')
+
   if (serializedParams) {
-    const marIndex = url.indexOf('#')
-    if (marIndex !== -1) {
-      url = url.slice(0, marIndex)
+    const markIndex = url.indexOf('#')
+    if (markIndex !== -1) {
+      url = url.slice(0, markIndex)
     }
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
