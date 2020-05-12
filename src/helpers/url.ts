@@ -1,6 +1,6 @@
 import { isDate, isPlainObject } from './util'
 
-function encode(val: string): string {
+function encode(val: string) {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
@@ -23,7 +23,7 @@ export function buildURL(url: string, params?: any): string {
     if (val === null || typeof val === 'undefined') {
       return
     }
-    let values: string[]
+    let values = []
     if (Array.isArray(val)) {
       values = val
       key += '[]'
@@ -41,11 +41,10 @@ export function buildURL(url: string, params?: any): string {
   })
 
   let serializedParams = parts.join('&')
-
   if (serializedParams) {
-    const markIndex = url.indexOf('#')
-    if (markIndex !== -1) {
-      url = url.slice(0, markIndex)
+    const marIndex = url.indexOf('#')
+    if (marIndex !== -1) {
+      url = url.slice(0, marIndex)
     }
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }

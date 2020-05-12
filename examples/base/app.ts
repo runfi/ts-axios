@@ -1,5 +1,7 @@
 import axios from '../../src/index'
 
+
+// 对get请求的params的转换
 // axios({
 //   method: 'get',
 //   url: '/base/get',
@@ -61,6 +63,26 @@ import axios from '../../src/index'
 //   }
 // })
 
+// 对data的处理
+
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   data: {
+//     a: 1,
+//     b: 2
+//   }
+// })
+
+// const arr = new Int32Array([21, 31])
+
+// axios({
+//   method: 'post',
+//   url: '/base/buffer',
+//   data: arr
+// })
+
+// 对headers的处理
 axios({
   method: 'post',
   url: '/base/post',
@@ -68,32 +90,33 @@ axios({
     a: 1,
     b: 2
   }
+}).then((res) => {
+  console.log(res)
 })
+
 
 axios({
   method: 'post',
   url: '/base/post',
-  headers: {
-    'content-type': 'application/json',
-    'Accept': 'application/json, text/p;ain, */*'
-  },
+  // headers: {
+  //   'content-type': 'application/json;'
+  // },
+  responseType: 'json',
   data: {
-    a: 1,
-    b: 2
+    a: 3,
+    b: 4
   }
+}).then((res) => {
+  console.log(res)
 })
 
-const arr = new Int32Array([21, 31])
-axios({
-  method: 'post',
-  url: '/base/buffer',
-  data: arr
-})
+// const paramsString = 'q=URLUtils.searchParams&topic=api'
+// const searchParams = new URLSearchParams(paramsString)
 
-const paramsString = 'q=URLUtils.searchParams&topic=api'
-const searchParams = new URLSearchParams(paramsString)
-axios({
-  method: 'post',
-  url: '/base/post',
-  data: searchParams
-})
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   data: searchParams
+// }).then((res) => {
+//   console.log(res)
+// })
